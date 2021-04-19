@@ -9,4 +9,4 @@ I used the following npm packages:
   - dotenv (--dev)
 
 The secret key for the database must be stored in an .env file in the root directory in the following format:
-MONGO_ATLAS_PW = <password>
+MONGO_ATLAS_PW = YOUR_PASSWORD
