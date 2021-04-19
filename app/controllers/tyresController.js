@@ -3,8 +3,22 @@ const Tyre = require("../models/Tyres");
 class TyresController {
   async getAll(req, res) {
     try {
-      const tyres = await Tyre.find().populate("brand");
-      res.status(200).json(tyres);
+      let brand = req.query.brand || "";
+      let size = req.query.size || "";
+      let tyreQuery = {};
+      let brandQuery = {};
+      if (brand) {
+        brandQuery.title = brand;
+      }
+      if (size) {
+        tyreQuery.size = `185/65 ${size} 84H`;
+        console.log(tyreQuery);
+      }
+      const tyres = await Tyre.find(tyreQuery).populate({
+        path: "brand",
+        match: brandQuery,
+      });
+      res.status(200).json(tyres.filter((tyre) => tyre.brand !== null));
     } catch (err) {
       res.json({ message: err });
     }
